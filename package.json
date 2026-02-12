@@ -1,0 +1,26 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "Playwright automation for traffic color validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "xvfb-run -a npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShitalLandge-19/TRAFFIC-COLOR.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShitalLandge-19/TRAFFIC-COLOR/issues"
+  },
+  "homepage": "https://github.com/ShitalLandge-19/TRAFFIC-COLOR#readme",
+  "devDependencies": {
+    "@mapbox/vector-tile": "^2.0.4",
+    "@playwright/test": "^1.58.2",
+    "pbf": "^4.0.1"
+  }
+}
