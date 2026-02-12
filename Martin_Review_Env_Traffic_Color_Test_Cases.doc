@@ -1,141 +1,56 @@
 Traffic Color - Martin Review Environment - Test Cases
 
 Application URL:
-https://review-mf-tfc-dem-n01jvo-review.dev-dcadcx.michelin.fr/traffic-color/#1/48.8581/2.3727
+https://review-mf-tfc-dem-n01jvo-review.dev-dcadcx.michelin.fr/traffic-color/#9.04/48.8581/2.3727
 
 Environment:
 Martin Review Environment
 
 Purpose:
-Validate traffic color visibility by zoom level and ensure Red, Orange, and Black traffic colors are displayed.
+1) Validate that traffic data is displayed only from zoom level 2 through zoom level 19.
+2) Validate that traffic colors Black, Red, and Orange are available in the review environment.
 
 
-Test Case Table
+Manual Test Cases
 
 TC ID: TC_TRAFFIC_001
-Title: Verify traffic layer is not displayed below zoom level 2 (zoom 0)
+Title: Verify traffic is not displayed before zoom 2 and is displayed from zoom 2 to zoom 19
 Preconditions:
 - User can access the traffic-color URL.
-- Browser is open with internet connectivity.
+- Browser has internet access.
+- Martin source is selected with Review tile endpoint.
 Steps:
-1. Open the provided URL.
-2. Zoom out to level 0.
-3. Observe the map traffic overlay.
+1. Open the URL with zoom 0 and observe traffic layer.
+2. Open the URL with zoom 1 and observe traffic layer.
+3. Open the URL with zoom 2 and observe traffic layer.
+4. Open the URL with zoom 19 and observe traffic layer.
 Expected Result:
-- No traffic color lines should be displayed at zoom level 0.
+- Zoom 0: traffic data is not displayed.
+- Zoom 1: traffic data is not displayed.
+- Zoom 2: traffic data is displayed.
+- Zoom 19: traffic data is displayed.
 Priority: High
 
 
 TC ID: TC_TRAFFIC_002
-Title: Verify traffic layer is not displayed below zoom level 2 (zoom 1)
+Title: Verify Black, Red, and Orange traffic colors are present
 Preconditions:
-- User is on the traffic-color map page.
+- User can access the traffic-color URL.
+- Martin source is selected with Review tile endpoint.
+- Zoom is in visible traffic range (example: zoom 9).
 Steps:
-1. Set map zoom level to 1.
-2. Observe all road overlays.
+1. Open the map at zoom level 9 in Paris area.
+2. Ensure review traffic tiles are loaded.
+3. Inspect loaded traffic features.
 Expected Result:
-- Traffic color lines should not be displayed at zoom level 1.
+- Black traffic color is present.
+- Red traffic color is present.
+- Orange traffic color is present.
 Priority: High
 
 
-TC ID: TC_TRAFFIC_003
-Title: Verify traffic layer starts displaying at zoom level 2
-Preconditions:
-- User is on the traffic-color map page.
-Steps:
-1. Set map zoom level to 2.
-2. Observe map roads and traffic overlays.
-Expected Result:
-- Traffic color lines are displayed starting at zoom level 2.
-Priority: High
+Automation Mapping (Playwright)
 
-
-TC ID: TC_TRAFFIC_004
-Title: Verify traffic layer remains visible for mid-range zoom levels
-Preconditions:
-- Traffic color layer is visible at zoom 2.
-Steps:
-1. Change zoom levels to 5, 10, and 15.
-2. Observe traffic overlays at each zoom level.
-Expected Result:
-- Traffic color lines remain visible at each tested zoom level between 2 and 19.
-Priority: Medium
-
-
-TC ID: TC_TRAFFIC_005
-Title: Verify traffic layer is visible at maximum supported zoom level 19
-Preconditions:
-- User is on the traffic-color map page.
-Steps:
-1. Zoom in to level 19.
-2. Observe road traffic overlays.
-Expected Result:
-- Traffic color lines are displayed at zoom level 19.
-Priority: High
-
-
-TC ID: TC_TRAFFIC_006
-Title: Verify Red traffic color is displayed
-Preconditions:
-- Zoom level is between 2 and 19.
-- Area with traffic data is visible on map.
-Steps:
-1. Pan and zoom in the map where traffic segments are available.
-2. Observe traffic segment colors.
-Expected Result:
-- At least one traffic segment is rendered in Red color.
-Priority: High
-
-
-TC ID: TC_TRAFFIC_007
-Title: Verify Orange traffic color is displayed
-Preconditions:
-- Zoom level is between 2 and 19.
-- Area with traffic data is visible on map.
-Steps:
-1. Pan and zoom in the map where traffic segments are available.
-2. Observe traffic segment colors.
-Expected Result:
-- At least one traffic segment is rendered in Orange color.
-Priority: High
-
-
-TC ID: TC_TRAFFIC_008
-Title: Verify Black traffic color is displayed
-Preconditions:
-- Zoom level is between 2 and 19.
-- Area with traffic data is visible on map.
-Steps:
-1. Pan and zoom in the map where traffic segments are available.
-2. Observe traffic segment colors.
-Expected Result:
-- At least one traffic segment is rendered in Black color.
-Priority: High
-
-
-TC ID: TC_TRAFFIC_009
-Title: Boundary validation while changing zoom from 1 to 2
-Preconditions:
-- User is on traffic-color page at zoom 1.
-Steps:
-1. Confirm traffic colors are not shown at zoom 1.
-2. Increase zoom to level 2.
-3. Observe traffic overlay immediately after zoom change.
-Expected Result:
-- At zoom 1: traffic colors not displayed.
-- At zoom 2: traffic colors displayed.
-Priority: High
-
-
-TC ID: TC_TRAFFIC_010
-Title: Regression check for color visibility across zoom range 2 to 19
-Preconditions:
-- User is on traffic-color page.
-Steps:
-1. Start at zoom 2 and verify traffic colors.
-2. Increase zoom step by step up to 19.
-3. At multiple checkpoints (2, 6, 10, 14, 19), verify color rendering.
-Expected Result:
-- Traffic colors remain visible at all checkpoints.
-- Red, Orange, and Black are rendered where corresponding data exists.
-Priority: Medium
+File: tests/traffic-color.spec.js
+- Test 1 maps to TC_TRAFFIC_001.
+- Test 2 maps to TC_TRAFFIC_002.
